@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate Generator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        @font-face {
+            font-family: 'OldEnglishTextMT';
+            src: url('./oldenglishtextmt.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        .wrapper {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            padding: 5px 5px;
+        }
+
+
+        .form-container {
+            width: 25%;
+            background: #fff;
+            padding: 5px 10px;
+            border-radius: 10px;
+            box-shadow: 0 4px 4px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.2rem;
+            border: 1px solid rgba(0, 0, 0, 0.4);
+        }
+
+        .form-container div {
+            width: 90%;
+        }
+
+        .form-container h2 {
+            text-align: center;
+            color: #1a237e;
+        }
+
+        .form-container label {
+            font-weight: bold;
+        }
+
+        .form-container input,
+        .form-container select {
+            width: 95%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 8px 4px;
+        }
+
+        .form-container button {
+            padding: 10px 20px;
+            background: #1a237e;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+
+        .form-container button:hover {
+            background: #0d153f;
+        }
+
+        /* certificate css  */
+
+        .certificate-container {
+            width: 75%;
+            height: 98vh;
+            overflow-y: scroll;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .certificate {
+            position: absolute;
+            scale: 1;
+            width: 950px;
+            padding: 20px 40px;
+            background: radial-gradient(circle at 50% 30%, #fffbd8 60%, #ffe88c 100%);
+            border: 8px solid #f0c14b;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            position: relative;
+            box-shadow:
+                0 0 0 4px #7e4703,
+                inset 0 0 0 4px #7e4703;
+        }
+
+        .first-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .banner {
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1px;
+            margin-left: 47px;
+        }
+
+        .banner p {
+            background: #8b1d25;
+            color: white;
+            font-weight: bold;
+            padding: 6px 10px;
+        }
+
+        .banner span {
+            width: 100%;
+            z-index: 3;
+            border: none;
+            border-top: 2px solid #8b1d25;
+        }
+
+        .certificate #title {
+            text-shadow: 2px 2px #f9fbe7;
+            font-family: 'OldEnglishTextMT';
+            font-size: 56px;
+            color: #8b1d25;
+            text-shadow: 2px 2px #f9fbe7;
+            text-align: center;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+
+        .second-row {
+            margin-top: -5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 100px 0 70px;
+            z-index: 4;
+
+        }
+
+        .logo {
+            width: 140px;
+            height: 140px;
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .detail {
+            margin-top: -125px !important;
+        }
+
+        .detail h2 {
+            font-size: 32px;
+            color: #1a237e;
+            margin-bottom: 15px;
+        }
+
+        .detail p {
+            font-size: 18px;
+        }
+
+        .certificate-text {
+            background: #8b1d25;
+            color: white;
+            font-family: OldEnglishTextMT;
+            font-size: 40px;
+            border-radius: 4px;
+            padding: 0 6px;
+        }
+
+        .details {
+            width: 100%;
+            margin-top: 20px;
+            font-size: 18px;
+            line-height: 2.5;
+            font-family: OldEnglishTextMT;
+            text-align: justify;
+        }
+
+        .student-detail {
+            color: #000;
+            padding: 0 55px;
+            font-family: 'Courier New', Courier, monospace;
+            text-align: center;
+            border-bottom: 2px dotted #000;
+
+        }
+
+        .last-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+
+        .photo {
+            width: 100px;
+            height: 120px;
+            border: 2px solid #1a237e;
+            background: #fafafa;
+            object-fit: cover;
+        }
+
+
+        .qr-code {
+            margin-top: 20px;
+        }
+
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            font-size: 16px;
+            align-items: center;
+        }
+
+        .signature {
+            width: 150px;
+        }
+
+        .grade-table {
+            width: 300px;
+            border-collapse: collapse;
+            text-align: center;
+            border: 2px solid #000;
+        }
+
+        .grade-table th,
+        .grade-table td {
+            border: 1px solid #000;
+            padding: 8px 10px;
+            color: #8b1d25;
+            font-weight: bold;
+        }
+
+        .grade-table th {
+            font-weight: bold;
+        }
+
+        .grade-table td {
+            padding: 8px 4px;
+            font-size: 11.5px;
+        }
+
+        .cert-list {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            border: 2px solid #000;
+            padding: 2px 4px;
+        }
+
+        .cert-list img {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+        }
+
+
+        .btns {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100px;
+            position: absolute;
+            right: 50px;
+            bottom: 20px;
+        }
+
+        .btns span {
+            border: 1px solid #000;
+            padding: 10px 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btns span:hover {
+            background: #000;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="wrapper">
+
+        <div class="form-container">
+            <h2>Enter Certificate Details</h2>
+            <label>Student Name:</label>
+            <input type="text" id="studentName" placeholder="Enter full name">
+
+            <label>Parent's Name:</label>
+            <input type="text" id="parentName" placeholder="Enter father/mother's name">
+
+            <label>Course Title:</label>
+            <input type="text" id="courseTitle" placeholder="Enter course title">
+
+            <label>Start Date:</label>
+            <input type="date" id="startDate">
+
+            <label>End Date:</label>
+            <input type="date" id="endDate">
+
+            <label>Grade:</label>
+            <select id="grade">
+                <option value="A+">A+</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+            </select>
+
+            <label>Certificate Number:</label>
+            <input type="text" id="certNumber" placeholder="Enter certificate number">
+
+            <label>Issue Date:</label>
+            <input type="date" id="issueDate">
+
+            <label>Student Photo:</label>
+            <input type="file" id="studentPhoto" accept="image/*">
+
+            <button onclick="generateCertificate()">Generate Certificate</button>
+            <button id="downloadBtn" style="display:none;" onclick="downloadPDF()">Download Certificate</button>
+
+        </div>
+
+        <div class="certificate-container">
+            <div class="certificate" id="certificate" style="display:none;">
+                <div class="first-row">
+                    <div>
+                        <p>Reg. No.</p>
+                        <p>AIAIT/737</p>
+                    </div>
+                    <div class="banner">
+                        <span></span>
+                        <p>AN ISO 9001 : 2015 Certified Institute</p>
+                        <span></span>
+                    </div>
+                    <div>
+                        <p>Certificate. No.</p>
+                        <p>125/SCCCH/230817</p>
+                    </div>
+                </div>
+
+                <div id="title">Sandhya Computer Coaching Centre</div>
+
+                <div class="second-row">
+                    <div class="logo"><img src="./images/logo.png" alt="" srcset=""></div>
+                    <div class="detail">
+                        <h2>HAPUR</h2>
+                        <p>Affiliated to : All India Association Of Information</p>
+                        <p>Technology, New Delhi - 110059</p>
+                        <p>Reg by : Ministry Of MSME, Govt. of India</p>
+                    </div>
+                    <img id="photoPreview" class="photo" alt="Student Photo">
+                </div>
+                <span class="certificate-text">Certificate</span>
+
+
+
+                <div class="details" id="certDetails">
+                    <p>This is to certify that
+                        <span>...................................................................</span> S/o D/o W/o
+                        <span>.............................................</span>
+                    </p>
+                    <p>has successfully completed the course from the month of
+                        <span>.........................................</span>
+                        to <span>..........................................</span>
+                    </p>
+                    <p>in <span>.........................................................</span> with grade
+                        <span>.........................</span>
+                    </p>
+                </div>
+
+                <div class="last-row">
+                    <table class="grade-table">
+                        <tr>
+                            <th rowspan="2">GRADE</th>
+                            <th>A+</th>
+                            <th>A</th>
+                            <th>B</th>
+                            <th>C</th>
+                        </tr>
+                        <tr>
+                            <td>85-100%</td>
+                            <td>75-84%</td>
+                            <td>65-74%</td>
+                            <td>20-60%</td>
+                        </tr>
+                    </table>
+                    <div class="qr-code" id="qrcode"></div>
+                    <div class="cert-list">
+                        <img src="./c1.png" alt="" srcset="">
+                        <img src="./images/c2.jpg" alt="" srcset="">
+                        <img src="./images/c1.png" alt="" srcset="">
+                        <img src="./images/c3.png" alt="" srcset="">
+                    </div>
+                </div>
+
+                <div class="footer">
+                    <span id="certIssueDate"></span>
+                    <span><img src="https://i.imgur.com/8QjM5kL.png" class="signature" alt="Director Signature"> <br>
+                        Director</span>
+                </div>
+                <div style="margin-top:10px; font-size:14px;">
+                    Place: HAPUR | Address: Swarg Ashram Road, HAPUR-245101
+                </div>
+            </div>
+            <div class="btns">
+                <span class="zoom-in">+</span>
+                <span class="zoom-out">-</span>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/circletype@2.3.0/dist/circletype.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script>
+
+        let circleInstance = null;
+
+        function generateCertificate() {
+
+            // Get all input elements
+            const inputs = {
+                studentName: document.getElementById("studentName"),
+                parentName: document.getElementById("parentName"),
+                courseTitle: document.getElementById("courseTitle"),
+                startDate: document.getElementById("startDate"),
+                endDate: document.getElementById("endDate"),
+                grade: document.getElementById("grade"),
+                certNumber: document.getElementById("certNumber"),
+                issueDate: document.getElementById("issueDate")
+            };
+
+            // Clear previous error highlights
+            Object.values(inputs).forEach(input => input.style.borderColor = "");
+
+            // Collect errors
+            let errors = [];
+
+            if (!inputs.studentName.value.trim()) {
+                errors.push("Student name is required.");
+                inputs.studentName.style.borderColor = "red";
+            }
+
+            if (!inputs.parentName.value.trim()) {
+                errors.push("Parent name is required.");
+                inputs.parentName.style.borderColor = "red";
+            }
+
+            if (!inputs.courseTitle.value.trim()) {
+                errors.push("Course title is required.");
+                inputs.courseTitle.style.borderColor = "red";
+            }
+
+            if (!inputs.startDate.value.trim()) {
+                errors.push("Start date is required.");
+                inputs.startDate.style.borderColor = "red";
+            }
+
+            if (!inputs.endDate.value.trim()) {
+                errors.push("End date is required.");
+                inputs.endDate.style.borderColor = "red";
+            }
+
+            if (!inputs.grade.value.trim()) {
+                errors.push("Grade is required.");
+                inputs.grade.style.borderColor = "red";
+            }
+
+            if (!inputs.certNumber.value.trim()) {
+                errors.push("Certificate number is required.");
+                inputs.certNumber.style.borderColor = "red";
+            }
+
+            if (!inputs.issueDate.value.trim()) {
+                errors.push("Issue date is required.");
+                inputs.issueDate.style.borderColor = "red";
+            }
+
+            // Optional: Validate date logic
+            if (inputs.startDate.value && inputs.endDate.value &&
+                new Date(inputs.startDate.value) > new Date(inputs.endDate.value)) {
+                errors.push("Start date cannot be after end date.");
+                inputs.startDate.style.borderColor = "red";
+                inputs.endDate.style.borderColor = "red";
+            }
+
+            // Show errors or proceed
+            if (errors.length > 0) {
+                alert(errors.join("\n"));
+            } else {
+                console.log("Validation passed. Proceed with certificate generation.");
+                // Update certificate text
+                document.getElementById("certDetails").innerHTML = `
+                <p>This is to certify that <span class="student-detail">${inputs.studentName.value}</span> S/o D/o W/o <span class="student-detail">${inputs.parentName.value}</span>
+                </p>
+                <p>has successfully completed the course from the month of <span class="student-detail">${formatDate(inputs.startDate.value)}</span> to <span class="student-detail">${formatDate(inputs.endDate.value)}</span>
+                </p>
+                <p>in <span class="student-detail">${inputs.courseTitle.value}</span> with grade <span class="student-detail">${inputs.grade.value}</span>
+                </p>`;
+    
+                document.getElementById("certIssueDate").innerHTML =
+                    `Date of Issue: ${formatDate(inputs.issueDate.value)}`;
+    
+                // Photo preview
+                const photoInput = document.getElementById("studentPhoto");
+                const photoPreview = document.getElementById("photoPreview");
+                if (photoInput.files && photoInput.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = e => { photoPreview.src = e.target.result; };
+                    reader.readAsDataURL(photoInput.files[0]);
+                }
+    
+                // QR code
+                const qrContainer = document.getElementById("qrcode");
+                qrContainer.innerHTML = "";
+                if (inputs.certNumber.value) {
+                    new QRCode(qrContainer, {
+                        text: `https://jk-siddhartha.github.io/certificate_generator/index.html/${inputs.certNumber.value}`,
+                        width: 100,
+                        height: 100
+                    });
+                }
+    
+                document.getElementById("certificate").style.display = "block";
+                document.getElementById("downloadBtn").style.display = "inline-block";
+    
+                const titleEl = document.getElementById('title');
+                if (!circleInstance) {
+                    circleInstance = new CircleType(titleEl).radius(700);
+                } else {
+                    circleInstance.refresh();
+                }
+            }
+        }
+
+
+        // Helper function to format date from YYYY-MM-DD to DD/MM/YYYY
+        function formatDate(dateString) {
+            if (!dateString) return "";
+            const date = new Date(dateString);
+            if (isNaN(date.getTime())) return "";
+
+            const day = String(date.getDate()).padStart(2, '0');
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const year = date.getFullYear();
+
+            return `${day}/${month}/${year}`;
+        }
+
+        function downloadPDF() {
+            const element = document.getElementById("certificate");
+            const prevTransform = element.style.transform;
+            element.style.transform = 'none';
+
+            document.fonts.ready.then(() => {
+                const opt = {
+                    margin: 5,
+                    filename: 'certificate.pdf',
+                    image: { type: 'jpeg', quality: 1 },
+                    html2canvas: {
+                        scale: 2,       // higher scale = sharper text
+                        useCORS: true   // allow external fonts/images
+                    },
+                    jsPDF: {
+                        unit: 'px',
+                        format: [1000, 1000]
+                    }
+                };
+
+                html2pdf().set(opt).from(element).save().then(() => {
+                    element.style.transform = prevTransform;
+                });
+            });
+        }
+
+
+        function getCurrentScale(el) {
+            // read matrix from computed style, default to 1 if none
+            const style = window.getComputedStyle(el);
+            const matrix = style.transform;
+            if (matrix === 'none') return 1;
+            const values = matrix.match(/matrix\(([^)]+)\)/)[1].split(',');
+            return parseFloat(values[0]); // scaleX
+        }
+
+        const cert = document.querySelector('.certificate');
+
+        document.querySelector('.zoom-in').addEventListener('click', () => {
+            let scale = getCurrentScale(cert);
+            scale = Math.min(scale + 0.1, 0.95);   // add 0.1, max 0.95
+            cert.style.transform = `scale(${scale})`;
+        });
+
+        document.querySelector('.zoom-out').addEventListener('click', () => {
+            let scale = getCurrentScale(cert);
+            scale = Math.max(scale - 0.1, 0.1);    // subtract 0.1, min 0.1
+            cert.style.transform = `scale(${scale})`;
+        });
+
+
+    </script>
+
+</body>
+
+</html>
