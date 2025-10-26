@@ -93,10 +93,12 @@
         .certificate {
             position: absolute;
             scale: 1;
-            width: 950px;
+            width: 1056px;
+            height: 816px;
             padding: 20px 40px;
-            background: radial-gradient(circle at 50% 30%, #fffbd8 60%, #ffe88c 100%);
-            border: 8px solid #f0c14b;
+            background: linear-gradient(to bottom, #fff8b2, #ffffff);
+            /* background: radial-gradient(circle at 50% 30%, #fffbd8 60%, #ffe88c 100%); */
+            /* border: 8px solid #f0c14b; */
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
             text-align: center;
             position: relative;
@@ -105,10 +107,36 @@
                 inset 0 0 0 4px #7e4703;
         }
 
+        .certificate .border-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .watermark-img {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0.1;
+            /* Light watermark effect */
+            width: 70%;
+            /* Adjust size as needed */
+            z-index: -1;
+            /* Keep behind content */
+            pointer-events: none;
+            /* Don't block clicks */
+        }
+
         .first-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
+            /* border: 1px solid red; */
+            padding: 0 50px;
+            margin-top: 10px;
         }
 
         .banner {
@@ -145,13 +173,17 @@
             margin-top: 10px;
         }
 
+        .certificate .title-img {
+            margin-top: 5px;
+        }
+
 
         .second-row {
             margin-top: -5%;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 100px 0 70px;
+            padding: 0 136px 0 104px;
             z-index: 4;
 
         }
@@ -201,7 +233,7 @@
 
         .student-detail {
             color: #000;
-            padding: 0 55px;
+            padding: 0 83px;
             font-family: 'Courier New', Courier, monospace;
             text-align: center;
             border-bottom: 2px dotted #000;
@@ -234,6 +266,7 @@
             margin-top: 40px;
             font-size: 16px;
             align-items: center;
+            padding: 0 50px;
         }
 
         .signature {
@@ -242,6 +275,7 @@
 
         .grade-table {
             width: 300px;
+            height: 73px;
             border-collapse: collapse;
             text-align: center;
             border: 2px solid #000;
@@ -267,17 +301,23 @@
         .cert-list {
             display: flex;
             align-items: center;
-            gap: 4px;
+            justify-content: space-between;
             border: 2px solid #000;
             padding: 2px 4px;
+            width: 340px;
+            height: 73px;
         }
-
+        
         .cert-list img {
             width: 60px;
             height: 60px;
-            object-fit: contain;
+            object-fit: fill;
         }
 
+        .cert-list .cert-img:first-child {
+            width: 130px !important;
+            height: 60px;
+        }
 
         .btns {
             display: flex;
@@ -349,6 +389,8 @@
 
         <div class="certificate-container">
             <div class="certificate" id="certificate" style="display:none;">
+                <img src="images/border.png" alt="" class="border-img">
+                <img src="images/watermark.jpeg" alt="" class="watermark-img">
                 <div class="first-row">
                     <div>
                         <p>Reg. No.</p>
@@ -365,7 +407,8 @@
                     </div>
                 </div>
 
-                <div id="title">Sandhya Computer Coaching Centre</div>
+                <!-- <div id="title">Sandhya Computer Coaching Centre</div> -->
+                <img src="images/titlee.png" alt="" class="title-img">
 
                 <div class="second-row">
                     <div class="logo"><img src="./images/logo.png" alt="" srcset=""></div>
@@ -384,7 +427,7 @@
                 <div class="details" id="certDetails">
                     <p>This is to certify that
                         <span>...................................................................</span> S/o D/o W/o
-                        <span>.............................................</span>
+                        <span>...................................................................</span>
                     </p>
                     <p>has successfully completed the course from the month of
                         <span>.........................................</span>
@@ -413,10 +456,10 @@
                     </table>
                     <div class="qr-code" id="qrcode"></div>
                     <div class="cert-list">
-                        <img src="./c1.png" alt="" srcset="">
-                        <img src="./images/c2.jpg" alt="" srcset="">
-                        <img src="./images/c1.png" alt="" srcset="">
-                        <img src="./images/c3.png" alt="" srcset="">
+                        <img src="./c1.png" alt="" srcset="" class="cert-img">
+                        <img src="./images/c2.jpg" alt="" srcset="" class="cert-img">
+                        <img src="./images/c1.png" alt="" srcset="" class="cert-img">
+                        <img src="./images/c3.png" alt="" srcset="" class="cert-img">
                     </div>
                 </div>
 
@@ -425,7 +468,7 @@
                     <span><img src="https://i.imgur.com/8QjM5kL.png" class="signature" alt="Director Signature"> <br>
                         Director</span>
                 </div>
-                <div style="margin-top:10px; font-size:14px;">
+                <div style="font-size:14px;">
                     Place: HAPUR | Address: Swarg Ashram Road, HAPUR-245101
                 </div>
             </div>
@@ -529,10 +572,10 @@
                 </p>
                 <p>in <span class="student-detail">${inputs.courseTitle.value}</span> with grade <span class="student-detail">${inputs.grade.value}</span>
                 </p>`;
-    
+
                 document.getElementById("certIssueDate").innerHTML =
                     `Date of Issue: ${formatDate(inputs.issueDate.value)}`;
-    
+
                 // Photo preview
                 const photoInput = document.getElementById("studentPhoto");
                 const photoPreview = document.getElementById("photoPreview");
@@ -541,7 +584,7 @@
                     reader.onload = e => { photoPreview.src = e.target.result; };
                     reader.readAsDataURL(photoInput.files[0]);
                 }
-    
+
                 // QR code
                 const qrContainer = document.getElementById("qrcode");
                 qrContainer.innerHTML = "";
@@ -552,10 +595,10 @@
                         height: 100
                     });
                 }
-    
+
                 document.getElementById("certificate").style.display = "block";
                 document.getElementById("downloadBtn").style.display = "inline-block";
-    
+
                 const titleEl = document.getElementById('title');
                 if (!circleInstance) {
                     circleInstance = new CircleType(titleEl).radius(700);
@@ -595,7 +638,8 @@
                     },
                     jsPDF: {
                         unit: 'px',
-                        format: [1000, 1000]
+                        format: [1080, 830], // <- set correct size here
+                        orientation: 'landscape'
                     }
                 };
 
